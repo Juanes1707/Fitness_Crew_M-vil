@@ -1,0 +1,14 @@
+node_modules/
+.expo/
+dist/
+coverage/
+.env
+.env.local
+*-debug.log
+firebase-debug.log
+firestore-debug.log
+storage-debug.log
+test-results/
+npm-audit.local.json
+**/node_modules/
+**/.expo/

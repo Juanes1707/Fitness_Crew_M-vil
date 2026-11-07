@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "FitCrew",
+    "slug": "fitcrew",
+    "scheme": "fitcrew",
+    "version": "1.0.0",
+    "orientation": "default",
+    "userInterfaceStyle": "automatic",
+    "plugins": [
+      "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "FitCrew necesita la cámara para fotografiar la ocupación del gimnasio.",
+          "recordAudioAndroid": false
+        }
+      ]
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "permissions": ["CAMERA"]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    }
+  }
+}

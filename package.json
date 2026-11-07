@@ -1,0 +1,47 @@
+{
+  "name": "fitcrew",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm run start --workspace @fitcrew/frontend",
+    "android": "npm run android --workspace @fitcrew/frontend",
+    "ios": "npm run ios --workspace @fitcrew/frontend",
+    "web": "npm run web --workspace @fitcrew/frontend",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "jest --runInBand",
+    "check:expo": "npm exec --workspace @fitcrew/frontend -- expo install --check",
+    "bundle": "npm exec --workspace @fitcrew/frontend -- expo export --platform all --output-dir ../dist",
+    "format": "prettier --write \"frontend/**/*.{ts,tsx,json}\" \"backend/**/*.{ts,json,mjs}\" \"tests/**/*.{ts,tsx}\" \"*.{json,js}\"",
+    "test:security": "node --test backend/tests/security.test.mjs",
+    "check:backend": "node backend/scripts/check-connection.mjs",
+    "test:backend": "node backend/scripts/check-connection.mjs --test-invalid-login"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.3.16",
+    "@testing-library/react-native": "14.1.0",
+    "@types/jest": "^30.0.0",
+    "@types/react": "~19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-expo": "~58.0.4",
+    "jest": "^30.0.0",
+    "jest-expo": "~58.0.14",
+    "prettier": "3.9.10",
+    "typescript": "^5.9.3",
+    "test-renderer": "1.3.0",
+    "@react-native/jest-preset": "0.88.1"
+  },
+  "overrides": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-server-dom-webpack": "19.3.0",
+    "react-native-worklets": "0.13.0"
+  },
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  }
+}
