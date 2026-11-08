@@ -99,6 +99,7 @@ Resultados ejecutados: `docs/verificacion.md`. Pruebas físicas pendientes: `doc
 
 ## Documentación y límites
 
+- [docs/CONTEXTO-TRASPASO.md](docs/CONTEXTO-TRASPASO.md): punto de entrada para un compañero; decisiones, implementación, pruebas aprobadas y pendientes para continuar sin rehacer trabajo.
 - `docs/informe-final.md`: cinco secciones del informe académico, actualizadas a Supabase.
 - `docs/defensa-tecnica.md`: responsabilidades, entradas, errores y accesibilidad por módulo.
 - `docs/guia-defensa.md`: recorrido breve de navegación, Redux, Supabase, reportes y archivos clave para la sustentación.
