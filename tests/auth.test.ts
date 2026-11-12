@@ -5,6 +5,10 @@ import {
   watchAuth,
 } from "../backend/services/authService";
 import { errorMessage } from "../backend/utils/validation";
+import { clearPhotoUrlCache } from "../backend/services/photoService";
+jest.mock("../backend/services/photoService", () => ({
+  clearPhotoUrlCache: jest.fn(),
+}));
 const mockAuth = {
   signInWithPassword: jest.fn(),
   signUp: jest.fn(),
@@ -83,6 +87,7 @@ test("registro con confirmación de correo no inventa una sesión", async () => 
 test("cierre de sesión es local y propaga fallos", async () => {
   await logout();
   expect(mockAuth.signOut).toHaveBeenCalledWith({ scope: "local" });
+  expect(clearPhotoUrlCache).toHaveBeenCalledTimes(1);
   mockAuth.signOut.mockResolvedValueOnce({ error: { code: "network_error" } });
   await expect(logout()).rejects.toEqual({ code: "network_error" });
 });

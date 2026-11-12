@@ -23,6 +23,7 @@ export default function Detail() {
   const state = useAppSelector((s) => s.gyms);
   const now = useNow();
   const [visible, setVisible] = useState(10);
+  const [openedPhotos, setOpenedPhotos] = useState<string[]>([]);
   const gym = state.items.find((g) => g.id === id);
   const reports = state.reports[id];
   const latest = reports?.[0];
@@ -71,6 +72,7 @@ export default function Detail() {
             ) : null}
             <ReportPhoto
               path={latest.photoPath}
+              priority="high"
               label={`Fotografía del último reporte de ${gym.name}`}
             />
           </>
@@ -114,10 +116,19 @@ export default function Detail() {
               : ""}
           </Copy>
           {r.id !== latest?.id ? (
-            <ReportPhoto
-              path={r.photoPath}
-              label={`Evidencia de ocupación ${levels[r.level].label}`}
-            />
+            openedPhotos.includes(r.id) ? (
+              <ReportPhoto
+                path={r.photoPath}
+                priority="low"
+                label={`Evidencia de ocupación ${levels[r.level].label}`}
+              />
+            ) : (
+              <Button
+                title="Ver fotografía del reporte"
+                secondary
+                onPress={() => setOpenedPhotos((current) => [...current, r.id])}
+              />
+            )
           ) : (
             <Copy muted>Fotografía mostrada en el último reporte.</Copy>
           )}

@@ -1,6 +1,7 @@
 import { publishReport, photoUrl } from "../backend/services/reportService";
 import { PendingReport } from "../backend/types";
 import * as FileSystem from "expo-file-system/legacy";
+import { clearPhotoUrlCache } from "../backend/services/photoService";
 const mockRead = jest.fn();
 const mockSingle = jest.fn();
 const mockInsert = jest.fn();
@@ -36,6 +37,7 @@ const pending: PendingReport = {
   capturedAt: 1,
 };
 beforeEach(() => {
+  clearPhotoUrlCache();
   mockSession.mockResolvedValue({
     data: { session: { user: { id: "u" } } },
     error: null,
@@ -44,6 +46,21 @@ beforeEach(() => {
   mockUpload.mockResolvedValue({ error: null });
   mockInsert.mockResolvedValue({ error: null });
   jest.mocked(FileSystem.readAsStringAsync).mockResolvedValue("/9j/");
+});
+
+test("abrir la misma foto varias veces comparte una sola petición de URL firmada", async () => {
+  mockSignedUrl.mockResolvedValue({
+    data: { signedUrl: "https://example.test/cached" },
+    error: null,
+  });
+  const result = await Promise.all([
+    photoUrl("u/same.jpg"),
+    photoUrl("u/same.jpg"),
+    photoUrl("u/same.jpg"),
+  ]);
+  expect(result).toEqual(Array(3).fill("https://example.test/cached"));
+  await photoUrl("u/same.jpg");
+  expect(mockSignedUrl).toHaveBeenCalledTimes(1);
 });
 test("sube ArrayBuffer antes de insertar reporte sin fecha controlada por cliente", async () => {
   await publishReport(pending);
@@ -131,5 +148,38 @@ test("las fotos usan URL firmada y propagan los errores de acceso", async () => 
   );
   expect(mockSignedUrl).toHaveBeenCalledWith("u/r.jpg", 3600);
   mockSignedUrl.mockResolvedValueOnce({ data: null, error: { status: 403 } });
+  clearPhotoUrlCache();
   await expect(photoUrl("u/r.jpg")).rejects.toEqual({ status: 403 });
+});
+
+test("la firma se renueva antes de vencer y después de cambiar sesión", async () => {
+  const now = jest.spyOn(Date, "now").mockReturnValue(1000);
+  mockSignedUrl.mockResolvedValue({
+    data: { signedUrl: "https://example.test/firma" },
+    error: null,
+  });
+  try {
+    await photoUrl("u/expires.jpg");
+    now.mockReturnValue(1000 + 50 * 60 * 1000);
+    await photoUrl("u/expires.jpg");
+    clearPhotoUrlCache();
+    await photoUrl("u/expires.jpg");
+    expect(mockSignedUrl).toHaveBeenCalledTimes(3);
+  } finally {
+    now.mockRestore();
+  }
+});
+
+test("un error de firma no queda en caché y permite reintentar", async () => {
+  mockSignedUrl
+    .mockResolvedValueOnce({ data: null, error: { status: 403 } })
+    .mockResolvedValueOnce({
+      data: { signedUrl: "https://example.test/retry" },
+      error: null,
+    });
+  await expect(photoUrl("u/retry.jpg")).rejects.toEqual({ status: 403 });
+  await expect(photoUrl("u/retry.jpg")).resolves.toBe(
+    "https://example.test/retry",
+  );
+  expect(mockSignedUrl).toHaveBeenCalledTimes(2);
 });

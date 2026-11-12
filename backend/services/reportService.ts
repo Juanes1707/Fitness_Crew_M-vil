@@ -72,10 +72,4 @@ export async function publishReport(report: PendingReport) {
     throw writeError;
   }
 }
-export async function photoUrl(path: string) {
-  const { data, error } = await backend()
-    .storage.from("report-photos")
-    .createSignedUrl(path, 3600);
-  if (error) throw error;
-  return data.signedUrl;
-}
+export { photoUrl } from "./photoService";

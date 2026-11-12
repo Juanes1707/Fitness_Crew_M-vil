@@ -4,6 +4,7 @@ import { UserProfile } from "../types";
 import { backend } from "./supabase";
 import { validateAuth } from "../utils/validation";
 import { withTimeout } from "../utils/timeout";
+import { clearPhotoUrlCache } from "./photoService";
 
 function profile(user: User): UserProfile {
   return {
@@ -40,6 +41,7 @@ export async function register(
 export async function logout() {
   const { error } = await backend().auth.signOut({ scope: "local" });
   if (error) throw error;
+  clearPhotoUrlCache();
 }
 export function watchAuth(
   next: (user: UserProfile | null) => void,
@@ -48,11 +50,17 @@ export function watchAuth(
   const client = backend();
   let active = true;
   let receivedEvent = false;
+  let currentUserId: string | null | undefined;
   const {
     data: { subscription },
   } = client.auth.onAuthStateChange((_event, session) => {
     // Callback síncrono: nunca llamar aquí a otras operaciones auth con await.
     receivedEvent = true;
+    const uid = session?.user.id ?? null;
+    if (uid !== currentUserId) {
+      clearPhotoUrlCache();
+      currentUserId = uid;
+    }
     if (active) next(session ? profile(session.user) : null);
   });
   void withTimeout(client.auth.getSession())

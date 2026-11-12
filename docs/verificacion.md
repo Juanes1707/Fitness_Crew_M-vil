@@ -105,3 +105,8 @@ Resultado USB posterior del 9: el A56 apareció autorizado. Con SecureStore real
 
 Cierre físico adicional del día 9: un anuncio de TalkBack confirmado por el usuario tras cerrar tutorial; auditoría completa pendiente. Cola local probada sin red: 1/5 después de guardar, foto/metadata recuperadas tras force-stop, eliminación hasta 0/5. Se terminó Expo Go antes de volver a habilitar Internet. No se publicó la captura; usuario aclaró que no estaba en gimnasio piloto. Red y accesibilidad restauradas, catálogo real cargado y Athletic sin reportes. Ver prueba-sesion-segura-android.md.
 
+
+## 12 de noviembre — carga de imágenes
+
+El usuario confirmó que publicación funciona; sus cambios incompletos se retiraron. Optimizaciones: expo-image 58.0.18 compatible con SDK 58, cache memory-disk con clave estable, firmas reutilizadas 50 minutos con deduplicación y limpieza al cambiar sesión, principal con prioridad alta e históricas bajo demanda. Prueba inicial: cuatro accesos al mismo path generaban cuatro firmas; tras el cambio sólo una. Se comprueba expiración, fallos y apertura diferida del historial. Cierre: 14 suites/90 pruebas Jest, 7 SQL PGlite, typecheck/lint/check:expo aprobados y bundle Android/iOS/web código 0. No hay medición de latencia física en esta sesión. No se alteraron SQL, fotografías remotas ni flujo de publicación. Detalle: carga-imagenes.md.
+

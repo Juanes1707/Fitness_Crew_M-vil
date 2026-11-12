@@ -85,6 +85,15 @@ test("el detalle presenta el último reporte, foto e historial y marca datos ant
     ),
   ).toBeTruthy();
   expect(screen.getByText("○ Vacío")).toBeTruthy();
+  expect(photoUrl).toHaveBeenCalledTimes(1);
+  expect(photoUrl).toHaveBeenCalledWith("u/ultimo.jpg");
+  await fireEvent.press(
+    screen.getByRole("button", { name: "Ver fotografía del reporte" }),
+  );
+  expect(
+    await screen.findByLabelText("Evidencia de ocupación Vacío"),
+  ).toBeTruthy();
+  expect(photoUrl).toHaveBeenCalledTimes(2);
 });
 test("búsqueda y navegación funcionan con datos de Redux", async () => {
   const store = makeStore();

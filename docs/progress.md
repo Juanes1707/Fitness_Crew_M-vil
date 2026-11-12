@@ -1,5 +1,9 @@
 # FitCrew — avance de desarrollo y QA
 
+## 12 de noviembre — carga de fotografías
+
+El usuario aclaró que publicar funciona; se retiraron los cuatro archivos del cambio incompleto de publicación y se abordó sólo carga de fotos. ReportPhoto ahora usa expo-image (SDK 58), caché memoria/disco y clave estable; URL firmada reutilizada durante 50 minutos con deduplicación y limpieza de sesión; foto principal prioritaria e históricas bajo demanda. Regresión observada: cuatro firmas para un mismo path antes; una después. Pasaron 90 pruebas de aplicación, 7 SQL, typecheck, lint y check:expo. Empaquetado de cierre registrado en verificacion.md. No hay medición física de latencia; no se tocó Storage remoto ni se recomprimieron fotos existentes. Detalle en carga-imagenes.md.
+
 ## Actualización del 12 de noviembre — Expo y ngrok
 
 Expo 58.0.24 y seis paquetes asociados alineados; Crypto y SecureStore también actualizados en backend para mantener versiones nativas únicas. Se instaló @expo/ngrok 4.1.3 local y se añadió `npm run start:tunnel` con proveedor ngrok explícito. Pasaron typecheck, lint, 87 pruebas de aplicación, 7 SQL y check:expo. Ngrok informa connected/ready; Metro local en 8082 responde y genera URL pública, pero la consulta externa desde este equipo falla (HTTPS ECONNRESET / HTTP 503). Comprobación desde otra red solicitada al usuario; no marcarla aprobada sin resultado. Detalle: iniciar-tunnel.md. No se modificaron .env ni SQL remoto ni datos del usuario.
