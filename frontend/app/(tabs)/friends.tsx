@@ -38,6 +38,7 @@ export default function Friends() {
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [membershipReady, setMembershipReady] = useState(false);
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
     let active = true;
@@ -45,6 +46,7 @@ export default function Friends() {
       .then((id) => {
         if (active) {
           setGroupId(id ?? "");
+          setMembershipReady(true);
           setError("");
         }
       })
@@ -94,6 +96,7 @@ export default function Friends() {
           disabled={busy}
           onPress={() => {
             setLoading(true);
+            setMembershipReady(false);
             setGroup(null);
             setItems([]);
             setAttempt((a) => a + 1);
@@ -102,6 +105,10 @@ export default function Friends() {
       ) : null}
       {loading ? (
         <Loading />
+      ) : !membershipReady ? (
+        <Copy muted>
+          No se pudo comprobar tu grupo. Vuelve a cargarlo antes de continuar.
+        </Copy>
       ) : groupId ? (
         group ? (
           <>

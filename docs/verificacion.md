@@ -94,3 +94,14 @@ El empaquetado de cierre de esta revisión terminó con código 0 para Android, 
 
 Se ejecutaron acceso/catálogo, búsqueda/detalle, captura y liberación de cámara, persistencia de sesión después de force-stop y revisión del listado en claro/oscuro. Texto al 200% reprodujo recortes de pestañas: se corrigieron con altura adaptable y etiquetas multilínea y se repitió la revisión visual. Evidencia y límites en docs/prueba-android-usb.md. No se publicaron reportes. Tras el ajuste pasaron typecheck, lint, 73 pruebas Jest, 7 pruebas SQL embebidas y check:expo. La escala de fuente y el tema se restauraron; FitCrew quedó en Gimnasios, sin cámara activa.
 
+
+## 9 de noviembre — sesión protegida y rúbrica
+
+SecureStore SDK 58 instalado con plugin; adaptador sessionStorage con migración y fragmentos cifrados. 10 pruebas nuevas del adaptador/SDK (red y almacenamiento nativo simulados), más 4 de Mi crew; una reprodujo el fallo de membresía desconocida tratada como grupo ausente, corregido. Resultado final: 14 suites, 87 pruebas Jest aprobadas (8.504 s en repetición), 7 SQL PGlite, typecheck y lint limpios, check:expo compatible, bundle Android/iOS/web exitoso. Smoke remoto: Auth accesible, gyms protegida, credenciales incorrectas rechazadas con 400; sin cuentas creadas ni reportes subidos. Instalación auditó alertas bajas/moderadas, sin ejecutar audit fix. ADB devuelve lista vacía incluso reiniciado; Windows sólo reconoce A56 por Bluetooth. No hay evidencia física nueva de SecureStore. Documentación y pendientes consolidados en estado-rubrica.md; informe corregido y guion-demo.md añadido. No hubo despliegue ni cambios SQL remotos.
+
+
+Resultado USB posterior del 9: el A56 apareció autorizado. Con SecureStore real en Expo Go, apertura autenticada sin reingreso, persistencia tras force-stop y salida persistente tras otro reinicio aprobadas. No se borraron datos ni se extrajeron tokens. La dificultad inicial de conexión está resuelta. Ver prueba-sesion-segura-android.md. Renovación forzada nativa y E2E restantes pendientes.
+
+
+Cierre físico adicional del día 9: un anuncio de TalkBack confirmado por el usuario tras cerrar tutorial; auditoría completa pendiente. Cola local probada sin red: 1/5 después de guardar, foto/metadata recuperadas tras force-stop, eliminación hasta 0/5. Se terminó Expo Go antes de volver a habilitar Internet. No se publicó la captura; usuario aclaró que no estaba en gimnasio piloto. Red y accesibilidad restauradas, catálogo real cargado y Athletic sin reportes. Ver prueba-sesion-segura-android.md.
+

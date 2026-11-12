@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "npm run start --workspace @fitcrew/frontend",
+    "start:tunnel": "npm exec --workspace @fitcrew/frontend -- expo start --go --tunnel ngrok --clear",
     "android": "npm run android --workspace @fitcrew/frontend",
     "ios": "npm run ios --workspace @fitcrew/frontend",
     "web": "npm run web --workspace @fitcrew/frontend",
@@ -23,6 +24,8 @@
   ],
   "devDependencies": {
     "@electric-sql/pglite": "^0.3.16",
+    "@expo/ngrok": "^4.1.3",
+    "@react-native/jest-preset": "0.88.1",
     "@testing-library/react-native": "14.1.0",
     "@types/jest": "^30.0.0",
     "@types/react": "~19.3.0",
@@ -31,9 +34,9 @@
     "jest": "^30.0.0",
     "jest-expo": "~58.0.14",
     "prettier": "3.9.10",
-    "typescript": "^5.9.3",
+    "supabase": "^3.1.0",
     "test-renderer": "1.3.0",
-    "@react-native/jest-preset": "0.88.1"
+    "typescript": "^5.9.3"
   },
   "overrides": {
     "react": "19.3.0",

@@ -1,5 +1,9 @@
 # FitCrew — contexto de traspaso para continuar el proyecto
 
+Resultado USB posterior del día 9: conexión resuelta, migración/continuidad de sesión y restauración tras force-stop comprobadas; salida persistente tras otro reinicio comprobada. Detalle en [prueba-sesion-segura-android.md](prueba-sesion-segura-android.md). La nota inferior de ADB vacío corresponde al inicio de esta sesión, no al estado final de esa prueba. Renovación forzada nativa sigue pendiente.
+
+**Actualización prioritaria del 9 de noviembre:** leer también [estado-rubrica.md](estado-rubrica.md). La rúbrica Fase 3 ya se recibió. Auth nativo ahora usa `sessionStorage.ts` con SecureStore, migración desde AsyncStorage, fragmentación segura para sesiones grandes y renovación/salida probadas con SDK real y red simulada. Nueva regresión de Mi crew corregida: error de membresía no equivale a ausencia de grupo. Último resultado: 14 suites/87 pruebas Jest, 7 SQL, typecheck/lint/check:expo y bundle Android/iOS/web aprobados. Smoke remoto aprobado sin escrituras. Repetir persistencia/salida físicas por el cambio de storage: ADB no detecta teléfono el día 9. Git ahora tiene remoto y dos commits de un autor. El resto del documento conserva el traspaso histórico del día 8; esta actualización prevalece donde cambie estado.
+
 Actualizado el **8 de noviembre de 2026**, America/Bogota. Consolida decisiones, implementación y verificaciones realizadas hasta el 7 de noviembre. La actualización del día 8 es documental; cualquier nueva ejecución de comprobaciones se registra al final.
 
 ## 1. Punto de partida para el compañero

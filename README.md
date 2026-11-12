@@ -34,6 +34,8 @@ npm ci
 npm start
 ```
 
+Para celulares en redes distintas, usar `npm run start:tunnel` y escanear el QR nuevo en Expo Go SDK 58. El script selecciona ngrok explícitamente y limpia la caché. Dejar el computador y la terminal encendidos. Configuración y comprobaciones: [docs/iniciar-tunnel.md](docs/iniciar-tunnel.md).
+
 Instala una sola vez desde la raíz: hay dos npm workspaces y un único lockfile. Stack: React Native 0.88, React 19.3, TypeScript, Expo SDK 58, Expo Router 58, Redux Toolkit/React Redux, Supabase JS, Camera, FileSystem, AsyncStorage y StyleSheet. No requiere módulos Firebase nativos, EAS ni una compilación de desarrollo para estos flujos.
 
 ## Configurar Supabase
@@ -65,7 +67,7 @@ npm exec --workspace @fitcrew/frontend -- expo start --clear
 
 ## Funciones y reglas sencillas
 
-- Registro, acceso, cierre de sesión local y restauración con Supabase Auth y AsyncStorage. El token se renueva mientras la aplicación nativa está activa.
+- Registro, acceso, cierre de sesión local y restauración con Supabase Auth y Expo SecureStore en Android/iOS. La sesión anterior en AsyncStorage migra automáticamente al almacenamiento protegido y se elimina su copia de texto plano tras confirmar el guardado. El token se renueva mientras la app está activa. Tema y pendientes conservan AsyncStorage; web usa persistencia estándar del SDK. Límites y pruebas: `docs/estado-rubrica.md`.
 - Gimnasios desde PostgreSQL, búsqueda sin distinguir acentos, detalle e historial. Sin reportes se muestra ausencia de información.
 - Cámara, vista previa y confirmación; JPEG menor a 5 MiB subido como ArrayBuffer a Storage; fila creada después de la foto con fecha asignada por PostgreSQL.
 - Reportes inmutables e ID UUID estable: un reintento confirmado no duplica datos. La foto ya subida se reutiliza si hubo un fallo parcial.
@@ -99,6 +101,8 @@ Resultados ejecutados: `docs/verificacion.md`. Pruebas físicas pendientes: `doc
 
 ## Documentación y límites
 
+- `docs/estado-rubrica.md`: revisión del 9 de noviembre; sesión protegida, 87 pruebas de aplicación/7 SQL, validación pendiente y estado de la rúbrica oficial recibida.
+- `docs/guion-demo.md`: recorrido de demostración y ejercicios para la defensa individual; requiere ensayo del equipo.
 - [docs/CONTEXTO-TRASPASO.md](docs/CONTEXTO-TRASPASO.md): punto de entrada para un compañero; decisiones, implementación, pruebas aprobadas y pendientes para continuar sin rehacer trabajo.
 - `docs/informe-final.md`: cinco secciones del informe académico, actualizadas a Supabase.
 - `docs/defensa-tecnica.md`: responsabilidades, entradas, errores y accesibilidad por módulo.

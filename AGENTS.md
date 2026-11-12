@@ -8,6 +8,10 @@ Antes de entregar ejecutar `npm run typecheck`, `npm run lint`, `npm test`, `npm
 
 ## Continuidad y traspaso
 
+Evidencia física de cierre del día 9 en `docs/prueba-sesion-segura-android.md`: SecureStore conserva acceso/restaura sesión y salida persiste tras reinicio. Cola local guardada/recuperada/eliminada sin Internet comprobada; no se publicó la foto de escritorio. Un anuncio de TalkBack confirmado por el usuario, auditoría completa pendiente. No repetir esos casos sin cambios; siguen pendientes renovación forzada nativa, reintento/deduplicación remoto, aislamiento entre cuentas, grupos y publicación real. Usuario no está en un piloto; para E2E remoto usar datos reales o entorno separado autorizado.
+
+Actualización del 9 de noviembre: consultar también `docs/estado-rubrica.md`. Sesión Android/iOS ahora en Expo SecureStore mediante `backend/services/sessionStorage.ts`, con migración desde AsyncStorage y fragmentos por límite de tamaño; web conserva storage del SDK. No revertir a texto plano ni borrar datos para probar migración. Último cierre: 87 pruebas Jest (14 suites), 7 SQL, typecheck, lint, check:expo y bundle aprobados. Repetir persistencia/salida física tras este cambio cuando ADB detecte el celular. La rúbrica Fase 3 ya está disponible; faltan Fase 1/2. Git existe con remoto; no fabricar contribuciones.
+
 Leer primero [docs/CONTEXTO-TRASPASO.md](docs/CONTEXTO-TRASPASO.md). Consolida decisiones autorizadas, arquitectura, configuración existente, correcciones, evidencia, comandos y pendientes. Consultar sólo el código pertinente a la tarea; no reiniciar el análisis ni reconstruir lo implementado.
 
 - Supabase ya está configurado y los tres gimnasios reales cargados por el usuario. No recrear el proyecto, volver a Firebase, sobrescribir `.env` ni reejecutar SQL remoto por rutina.

@@ -1,5 +1,21 @@
 # FitCrew — avance de desarrollo y QA
 
+## Actualización del 12 de noviembre — Expo y ngrok
+
+Expo 58.0.24 y seis paquetes asociados alineados; Crypto y SecureStore también actualizados en backend para mantener versiones nativas únicas. Se instaló @expo/ngrok 4.1.3 local y se añadió `npm run start:tunnel` con proveedor ngrok explícito. Pasaron typecheck, lint, 87 pruebas de aplicación, 7 SQL y check:expo. Ngrok informa connected/ready; Metro local en 8082 responde y genera URL pública, pero la consulta externa desde este equipo falla (HTTPS ECONNRESET / HTTP 503). Comprobación desde otra red solicitada al usuario; no marcarla aprobada sin resultado. Detalle: iniciar-tunnel.md. No se modificaron .env ni SQL remoto ni datos del usuario.
+
+## Actualización del 9 de noviembre
+
+Resultados adicionales de cierre: anuncio de Ver Athletic Gym Chía confirmado por el usuario con TalkBack (parcial); cola sin Internet guardó 1/5, recuperó foto/metadatos tras force-stop y permitió eliminar hasta 0/5 antes de restaurar red. No se subió ninguna foto. El usuario aclaró que no estaba en Athletic; no usar la captura de escritorio como reporte real. Datos móviles y ajustes de accesibilidad restaurados; catálogo vuelve a cargar. Reintento/deduplicación remotos, cambio de cuenta, grupos y auditoría completa siguen pendientes.
+
+Resultado físico posterior: ADB finalmente detectó el A56. Con el storage nuevo, sesión preexistente conservada al abrir, persistencia tras force-stop y cierre de sesión persistente después de reiniciar comprobados. Ver prueba-sesion-segura-android.md. La nota de bloqueo USB inferior es histórica y quedó resuelta. Se solicitó nuevo acceso directo al usuario para continuar; renovación forzada nativa, publicación/grupos/offline y auditoría completa siguen pendientes.
+
+Se implementó almacenamiento de sesión nativo protegido con SecureStore, migración desde AsyncStorage y soporte de sesiones grandes; web mantiene storage estándar. Diez pruebas nuevas incluyen ciclo Auth con SDK real y red simulada, fallos de migración/escritura, renovación, salida y corrupción. Cuatro pruebas de pantalla Mi crew reprodujeron/cubren un fallo: consulta de membresía fallida ofrecía crear/unirse como si no hubiera grupo; ahora exige recuperación antes de continuar. No se modificó SQL remoto ni el flujo de publicación existente.
+
+Pasaron 14 suites/87 pruebas Jest, 7 SQL, typecheck, lint limpio, check:expo, bundle Android/iOS/web y smoke remoto sin escrituras. Instalación de SecureStore compatible SDK 58, dependencias explícitas en frontend/backend y plugin registrado. Informe actualizado con rúbrica real, almacenamiento seguro, evidencia física histórica y bibliografía APA. Se añadieron estado-rubrica.md y guion-demo.md. No se inventaron personas/competidores de Fase 1 ni compromisos de Fase 2, aún ausentes.
+
+Bloqueo físico actual: ADB lista vacía incluso tras reinicio; Windows sólo identifica el A56 por Bluetooth. El usuario está revisando el cable USB-C. Próximo paso: verificar migración de la sesión existente sin borrar datos, reinicio, renovación y cierre en Android; después publicación real/segunda cuenta, grupos, offline y TalkBack. La evidencia del día 7 sigue siendo histórica y no valida automáticamente el nuevo storage. Las tablas inferiores corresponden al cierre previo.
+
 Actualizado el 8 de noviembre de 2026, America/Bogota. Estado: implementación del MVP revisada y verificada localmente; validación Android parcial ejecutada por USB el 7 de noviembre. Leer primero [CONTEXTO-TRASPASO.md](CONTEXTO-TRASPASO.md). Evidencia física en [prueba-android-usb.md](prueba-android-usb.md).
 
 El usuario confirmó **conservar Supabase**. Las referencias a Firebase de la plantilla se corresponden con Supabase Auth, PostgreSQL, Storage y Realtime. Se mantuvieron Expo SDK 58, TypeScript, Redux Toolkit/React Redux, las carpetas frontend/backend y las dependencias existentes.
